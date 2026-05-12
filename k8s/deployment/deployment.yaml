@@ -7,7 +7,7 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      app: spring-pet-clinic
+      app: spring-petclinic
       harness.io/color: blue
   template:
     metadata:
@@ -63,7 +63,7 @@ metadata:
     harness.io/primary-service: "true"
 spec:
   selector:
-    app: spring-pet-clinic
+    app: spring-petclinic
     harness.io/color: blue
   ports:
   - protocol: TCP
