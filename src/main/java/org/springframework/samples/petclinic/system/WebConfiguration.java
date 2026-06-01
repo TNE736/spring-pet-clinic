@@ -7,7 +7,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-
 import java.util.Locale;
 
 /**
@@ -20,12 +19,18 @@ import java.util.Locale;
  *
  * @author Anuj Ashok Potdar
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @SuppressWarnings("unused")
 public class WebConfiguration implements WebMvcConfigurer {
 
+	private final LocaleChangeInterceptor localeChangeInterceptor;
+
+	public WebConfiguration(LocaleChangeInterceptor localeChangeInterceptor) {
+		this.localeChangeInterceptor = localeChangeInterceptor;
+	}
+
 	/**
-	 * Uses session storage to remember the user’s language setting across requests.
+	 * Uses session storage to remember the user's language setting across requests.
 	 * Defaults to English if nothing is specified.
 	 * @return session-based {@link LocaleResolver}
 	 */
@@ -54,7 +59,6 @@ public class WebConfiguration implements WebMvcConfigurer {
 	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(localeChangeInterceptor());
+		registry.addInterceptor(this.localeChangeInterceptor);
 	}
-
 }
